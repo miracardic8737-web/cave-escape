@@ -264,10 +264,6 @@ body { background: #050200; font-family: 'Segoe UI', sans-serif; color: #fff; ov
 .pedal-label { font-size: 0.65rem; font-weight: bold; color: rgba(255,255,255,0.9); letter-spacing: 0.05em; }
 
 /* Mobile HUD adjustments */
-@media (min-width: 769px) {
-  #mobileControls { display: none !important; }
-}
-
 @media (max-width: 768px) {
   #speedometer { bottom: 185px; right: 10px; }
   #speedValue { font-size: 1.5rem; }
@@ -275,4 +271,9 @@ body { background: #050200; font-family: 'Segoe UI', sans-serif; color: #fff; ov
   #minimapCanvas { width: 80px; height: 110px; }
   #scoreBox { font-size: 1rem; }
   #chaserDist { font-size: 0.85rem; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* Sadece gerçek mouse olan cihazlarda (masaüstü) gizle */
+  #mobileControls { display: none !important; }
 }
