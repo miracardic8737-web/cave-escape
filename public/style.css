@@ -200,29 +200,73 @@ body { background: #050200; font-family: 'Segoe UI', sans-serif; color: #fff; ov
 
 /* ===== MOBILE CONTROLS ===== */
 #mobileControls {
-  position: fixed; bottom: 0; left: 0; right: 0; height: 160px;
-  display: flex; align-items: center; justify-content: center;
+  position: fixed; bottom: 0; left: 0; right: 0; height: 170px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 0 16px 20px;
   z-index: 20; pointer-events: none;
 }
-#joystickArea { pointer-events: all; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-#joystick {
-  width: 110px; height: 110px; background: rgba(255,255,255,0.06);
-  border: 2px solid rgba(255,120,0,0.35); border-radius: 50%; position: relative; touch-action: none;
-}
-#joystickKnob {
-  width: 44px; height: 44px; background: rgba(255,130,0,0.75); border-radius: 50%;
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  pointer-events: none; box-shadow: 0 0 14px rgba(255,130,0,0.5);
-}
-.joy-hint { font-size: 0.7rem; color: #555; }
 
-/* ===== RESPONSIVE ===== */
+/* Sol: Sağ/Sol oklar */
+#steerButtons {
+  pointer-events: all;
+  display: flex; gap: 12px; align-items: flex-end;
+}
+
+.steer-btn {
+  width: 72px; height: 72px;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid rgba(255,150,0,0.5);
+  border-radius: 14px;
+  color: #ff9900; font-size: 1.8rem;
+  cursor: pointer; touch-action: none; user-select: none;
+  -webkit-user-select: none;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+.steer-btn:active { background: rgba(255,150,0,0.3); }
+
+/* Sağ: Pedallar */
+#pedalButtons {
+  pointer-events: all;
+  display: flex; flex-direction: column; gap: 10px; align-items: flex-end;
+}
+
+.pedal-btn {
+  width: 90px; height: 72px;
+  border: none; border-radius: 14px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px; cursor: pointer; touch-action: none; user-select: none;
+  -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.gas-btn {
+  background: linear-gradient(180deg, #22cc44 0%, #118822 100%);
+  box-shadow: 0 6px 0 #0a5514, 0 0 20px rgba(34,200,68,0.3);
+}
+.gas-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #0a5514, 0 0 10px rgba(34,200,68,0.2);
+}
+
+.brake-btn {
+  background: linear-gradient(180deg, #cc2222 0%, #881111 100%);
+  box-shadow: 0 6px 0 #550a0a, 0 0 20px rgba(200,34,34,0.3);
+}
+.brake-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #550a0a, 0 0 10px rgba(200,34,34,0.2);
+}
+
+.pedal-icon { font-size: 1.4rem; line-height: 1; }
+.pedal-label { font-size: 0.65rem; font-weight: bold; color: rgba(255,255,255,0.9); letter-spacing: 0.05em; }
+
+/* Mobile HUD adjustments */
 @media (max-width: 600px) {
-  .lobby-body { flex-direction: column; }
-  .lobby-header h1 { font-size: 2rem; }
-  #speedometer { bottom: 170px; right: 10px; }
+  #speedometer { bottom: 185px; right: 10px; }
   #speedValue { font-size: 1.5rem; }
-  #minimap { bottom: 170px; left: 10px; }
+  #minimap { bottom: 185px; left: 10px; }
   #minimapCanvas { width: 80px; height: 110px; }
   #scoreBox { font-size: 1rem; }
   #chaserDist { font-size: 0.85rem; }

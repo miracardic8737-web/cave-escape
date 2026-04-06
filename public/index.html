@@ -106,11 +106,21 @@
 
 <!-- Mobile Controls -->
 <div id="mobileControls" style="display:none">
-  <div id="joystickArea">
-    <div id="joystick">
-      <div id="joystickKnob"></div>
-    </div>
-    <div class="joy-hint">← →</div>
+  <!-- Sol: Sağ/Sol oklar -->
+  <div id="steerButtons">
+    <button id="btnLeft" class="steer-btn">◀</button>
+    <button id="btnRight" class="steer-btn">▶</button>
+  </div>
+  <!-- Sağ: Gaz/Fren pedalları -->
+  <div id="pedalButtons">
+    <button id="btnGas" class="pedal-btn gas-btn">
+      <span class="pedal-icon">⬆</span>
+      <span class="pedal-label">GAZ</span>
+    </button>
+    <button id="btnBrake" class="pedal-btn brake-btn">
+      <span class="pedal-icon">⬇</span>
+      <span class="pedal-label">FREN</span>
+    </button>
   </div>
 </div>
 

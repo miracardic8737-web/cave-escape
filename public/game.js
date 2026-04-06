@@ -715,10 +715,13 @@ function updateCar() {
 
   const left  = keys['ArrowLeft']  || keys['KeyA'] || joystick.dx < -0.2;
   const right = keys['ArrowRight'] || keys['KeyD'] || joystick.dx > 0.2;
+  const gasHeld   = keys['mobile_gas'];
+  const brakeHeld = keys['mobile_brake'];
 
-  // Forward speed: gentle ramp-up
-  const forwardSpeed = BASE_SPEED + Math.min(score * 0.00012, 0.18);
-
+  // Forward speed: gentle ramp-up, gas boosts, brake slows
+  let forwardSpeed = BASE_SPEED + Math.min(score * 0.00012, 0.18);
+  if (gasHeld)   forwardSpeed = Math.min(forwardSpeed * 1.5, BASE_SPEED * 2.2);
+  if (brakeHeld) forwardSpeed = Math.max(forwardSpeed * 0.3, 0.02);
   // Lateral
   if (left)       lateralSpeed = Math.max(lateralSpeed - LATERAL_ACCEL, -MAX_LATERAL);
   else if (right) lateralSpeed = Math.min(lateralSpeed + LATERAL_ACCEL,  MAX_LATERAL);
@@ -890,39 +893,27 @@ function startCountdown() {
 }
 
 // ============================================================
-//  MOBILE CONTROLS
+//  MOBILE CONTROLS - Pedals + Steer buttons
 // ============================================================
 function initMobileControls() {
-  const joyEl = document.getElementById('joystick');
-  const knobEl = document.getElementById('joystickKnob');
-  if (!joyEl) return;
+  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 768;
+  if (!isMobile) return;
   document.getElementById('mobileControls').style.display = 'flex';
 
-  joyEl.addEventListener('touchstart', e => {
-    e.preventDefault();
-    const r = joyEl.getBoundingClientRect();
-    joystick.active = true;
-    joystick.startX = r.left + r.width / 2;
-    joystick.dx = 0;
-  }, { passive: false });
+  function bindBtn(id, keyOn, keyOff) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const on  = e => { e.preventDefault(); keys[keyOn] = true;  if (keyOff) keys[keyOff] = false; };
+    const off = e => { e.preventDefault(); keys[keyOn] = false; };
+    el.addEventListener('touchstart',  on,  { passive: false });
+    el.addEventListener('touchend',    off, { passive: false });
+    el.addEventListener('touchcancel', off, { passive: false });
+  }
 
-  joyEl.addEventListener('touchmove', e => {
-    e.preventDefault();
-    if (!joystick.active) return;
-    const maxR = 40;
-    let dx = e.touches[0].clientX - joystick.startX;
-    if (Math.abs(dx) > maxR) dx = Math.sign(dx) * maxR;
-    joystick.dx = dx / maxR;
-    knobEl.style.transform = `translate(calc(-50% + ${dx}px), -50%)`;
-  }, { passive: false });
-
-  const endJoy = e => {
-    e.preventDefault();
-    joystick.active = false; joystick.dx = 0;
-    knobEl.style.transform = 'translate(-50%, -50%)';
-  };
-  joyEl.addEventListener('touchend', endJoy, { passive: false });
-  joyEl.addEventListener('touchcancel', endJoy, { passive: false });
+  bindBtn('btnLeft',  'ArrowLeft',  'ArrowRight');
+  bindBtn('btnRight', 'ArrowRight', 'ArrowLeft');
+  bindBtn('btnGas',   'mobile_gas',   null);
+  bindBtn('btnBrake', 'mobile_brake', null);
 }
 
 // ============================================================
