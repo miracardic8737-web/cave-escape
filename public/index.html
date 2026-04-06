@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Mağara Kaçışı</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ===== LOBBY ===== -->
+<div id="lobby">
+
+  <!-- Main lobby screen -->
+  <div id="lobbyMain">
+    <div class="lobby-header">
+      <h1>🚗 Mağara Kaçışı</h1>
+      <p class="subtitle">Sonsuz Koşu · Multiplayer · Kovalayan Düşman</p>
+    </div>
+
+    <div class="lobby-body">
+      <!-- Create room -->
+      <div class="lobby-panel">
+        <h3>Oda Oluştur</h3>
+        <input type="text" id="roomNameInput" placeholder="Oda adı..." maxlength="20" value="Mağara" />
+        <div class="mode-toggle">
+          <label class="toggle-label">
+            <input type="checkbox" id="chainToggle" />
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">⛓ Zincir Modu</span>
+          </label>
+        </div>
+        <button class="btn-primary" onclick="createRoom()">+ Oda Oluştur</button>
+      </div>
+
+      <!-- Room list -->
+      <div class="lobby-panel rooms-panel">
+        <div class="rooms-header">
+          <h3>Açık Odalar</h3>
+          <button class="btn-refresh" onclick="socket && socket.emit('getRoomList')">↻</button>
+        </div>
+        <div id="roomList"><div class="no-rooms">Yükleniyor...</div></div>
+      </div>
+    </div>
+
+    <div id="lobbyMsg" class="lobby-msg"></div>
+    <div class="controls-hint">← → veya A D ile sola/sağa kayma</div>
+  </div>
+
+  <!-- Waiting room -->
+  <div id="waitingRoom" style="display:none">
+    <div class="waiting-box">
+      <h2 id="waitingRoomName">🏠 Oda</h2>
+      <p id="waitingRoomId" class="room-code"></p>
+      <div id="waitingPlayers" class="waiting-players-list"></div>
+      <div class="waiting-actions">
+        <button id="readyBtn" class="btn-primary" onclick="setReady()">✅ Hazır</button>
+        <button class="btn-secondary" onclick="leaveWaiting()">← Geri</button>
+      </div>
+      <p class="waiting-hint">Tüm oyuncular hazır olunca oyun başlar</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== HUD ===== -->
+<div id="hud" style="display:none">
+  <div id="speedometer">
+    <span id="speedValue">0</span>
+    <span class="unit">km/h</span>
+  </div>
+  <div id="scoreBox"><span id="scoreVal">0m</span></div>
+  <div id="chaserDist">👹 --m</div>
+  <div id="playerList"></div>
+  <div id="minimap">
+    <div class="minimap-label">📍 Harita</div>
+    <canvas id="minimapCanvas" width="100" height="140"></canvas>
+  </div>
+  <div id="chainIndicator" style="display:none">⛓ ZİNCİR MODU</div>
+</div>
+
+<!-- Countdown -->
+<div id="countdown" style="display:none"></div>
+
+<!-- Notification -->
+<div id="notification"></div>
+
+<!-- Death Screen -->
+<div id="deathScreen" style="display:none">
+  <div class="finish-box">
+    <div class="death-icon">💀</div>
+    <h2>Yakalandın!</h2>
+    <p>Mesafe: <strong id="deathScore">0m</strong></p>
+    <button class="btn-primary" onclick="location.reload()">Tekrar Dene</button>
+  </div>
+</div>
+
+<!-- Finish Screen -->
+<div id="finishScreen" style="display:none">
+  <div class="finish-box">
+    <h2>🏆 Skor Tablosu</h2>
+    <div id="leaderboard"></div>
+    <button class="btn-primary" onclick="location.reload()">Tekrar Oyna</button>
+  </div>
+</div>
+
+<!-- Mobile Controls -->
+<div id="mobileControls" style="display:none">
+  <div id="joystickArea">
+    <div id="joystick">
+      <div id="joystickKnob"></div>
+    </div>
+    <div class="joy-hint">← →</div>
+  </div>
+</div>
+
+<canvas id="gameCanvas"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
