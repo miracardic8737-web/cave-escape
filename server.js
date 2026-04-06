@@ -191,4 +191,24 @@ function endGame(room) {
 }
 
 const PORT = process.env.PORT || 3004;
-server.listen(PORT, () => console.log(`Cave Escape running on http://localhost:${PORT}`));
+server.listen(PORT, () => {
+  console.log(`Cave Escape running on http://localhost:${PORT}`);
+
+  // Self-ping every 14 minutes to prevent Render free tier sleep
+  // RENDER_EXTERNAL_URL örn: https://cave-escape.onrender.com
+  const selfUrl = process.env.RENDER_EXTERNAL_URL
+    ? `https://${process.env.RENDER_EXTERNAL_URL}`
+    : null;
+
+  if (selfUrl) {
+    const https = require('https');
+    setInterval(() => {
+      https.get(selfUrl, (res) => {
+        console.log(`[keep-alive] ping OK ${res.statusCode}`);
+      }).on('error', (e) => {
+        console.warn('[keep-alive] ping failed:', e.message);
+      });
+    }, 14 * 60 * 1000);
+    console.log(`[keep-alive] Self-ping aktif → ${selfUrl}`);
+  }
+});

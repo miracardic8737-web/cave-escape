@@ -10,3 +10,5 @@ services:
         value: production
       - key: PORT
         value: 10000
+      - key: RENDER_EXTERNAL_URL
+        value: cave-escape.onrender.com
