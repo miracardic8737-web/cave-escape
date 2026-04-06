@@ -203,7 +203,8 @@ body { background: #050200; font-family: 'Segoe UI', sans-serif; color: #fff; ov
   position: fixed; bottom: 0; left: 0; right: 0; height: 170px;
   display: flex; align-items: flex-end; justify-content: space-between;
   padding: 0 16px 20px;
-  z-index: 20; pointer-events: none;
+  z-index: 30; pointer-events: none;
+  /* Her zaman canvas üstünde */
 }
 
 /* Sol: Sağ/Sol oklar */
@@ -263,7 +264,11 @@ body { background: #050200; font-family: 'Segoe UI', sans-serif; color: #fff; ov
 .pedal-label { font-size: 0.65rem; font-weight: bold; color: rgba(255,255,255,0.9); letter-spacing: 0.05em; }
 
 /* Mobile HUD adjustments */
-@media (max-width: 600px) {
+@media (min-width: 769px) {
+  #mobileControls { display: none !important; }
+}
+
+@media (max-width: 768px) {
   #speedometer { bottom: 185px; right: 10px; }
   #speedValue { font-size: 1.5rem; }
   #minimap { bottom: 185px; left: 10px; }

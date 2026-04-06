@@ -896,9 +896,10 @@ function startCountdown() {
 //  MOBILE CONTROLS - Pedals + Steer buttons
 // ============================================================
 function initMobileControls() {
-  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 768;
-  if (!isMobile) return;
-  document.getElementById('mobileControls').style.display = 'flex';
+  const el = document.getElementById('mobileControls');
+  if (!el) return;
+  // Her zaman göster — CSS media query masaüstünde gizler
+  el.style.display = 'flex';
 
   function bindBtn(id, keyOn, keyOff) {
     const el = document.getElementById(id);
