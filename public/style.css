@@ -201,10 +201,10 @@ body { background: #050200; font-family: 'Segoe UI', sans-serif; color: #fff; ov
 /* ===== MOBILE CONTROLS ===== */
 #mobileControls {
   position: fixed; bottom: 0; left: 0; right: 0; height: 170px;
-  display: flex; align-items: flex-end; justify-content: space-between;
+  align-items: flex-end; justify-content: space-between;
   padding: 0 16px 20px;
   z-index: 30; pointer-events: none;
-  /* Her zaman canvas üstünde */
+  display: none; /* JS ile açılır */
 }
 
 /* Sol: Sağ/Sol oklar */

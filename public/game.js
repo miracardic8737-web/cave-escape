@@ -202,6 +202,9 @@ function startGame(data) {
   document.getElementById('hud').style.display = 'block';
   if (chainMode) document.getElementById('chainIndicator').style.display = 'block';
 
+  // Mobil kontrolleri her zaman göster (masaüstünde CSS gizler)
+  document.getElementById('mobileControls').style.display = 'flex';
+
   initThree();
   initMaterials();
   generateInitialChunks();
