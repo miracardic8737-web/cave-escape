@@ -901,17 +901,35 @@ function startCountdown() {
 function initMobileControls() {
   const el = document.getElementById('mobileControls');
   if (!el) return;
-  // Her zaman göster — CSS media query masaüstünde gizler
   el.style.display = 'flex';
 
   function bindBtn(id, keyOn, keyOff) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const on  = e => { e.preventDefault(); keys[keyOn] = true;  if (keyOff) keys[keyOff] = false; };
-    const off = e => { e.preventDefault(); keys[keyOn] = false; };
-    el.addEventListener('touchstart',  on,  { passive: false });
-    el.addEventListener('touchend',    off, { passive: false });
-    el.addEventListener('touchcancel', off, { passive: false });
+    const btn = document.getElementById(id);
+    if (!btn) return;
+
+    const on = e => {
+      e.preventDefault();
+      e.stopPropagation();
+      keys[keyOn] = true;
+      if (keyOff) keys[keyOff] = false;
+      btn.style.opacity = '0.7';
+    };
+    const off = e => {
+      e.preventDefault();
+      e.stopPropagation();
+      keys[keyOn] = false;
+      btn.style.opacity = '1';
+    };
+
+    // Touch events
+    btn.addEventListener('touchstart',  on,  { passive: false });
+    btn.addEventListener('touchend',    off, { passive: false });
+    btn.addEventListener('touchcancel', off, { passive: false });
+
+    // Mouse events (fallback + desktop test)
+    btn.addEventListener('mousedown', on);
+    btn.addEventListener('mouseup',   off);
+    btn.addEventListener('mouseleave', off);
   }
 
   bindBtn('btnLeft',  'ArrowLeft',  'ArrowRight');

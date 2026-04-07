@@ -219,11 +219,11 @@ body { background: #050200; font-family: 'Segoe UI', sans-serif; color: #fff; ov
   border: 2px solid rgba(255,150,0,0.5);
   border-radius: 14px;
   color: #ff9900; font-size: 1.8rem;
-  cursor: pointer; touch-action: none; user-select: none;
+  cursor: pointer; touch-action: manipulation; user-select: none;
   -webkit-user-select: none;
   display: flex; align-items: center; justify-content: center;
-  transition: background 0.1s;
   -webkit-tap-highlight-color: transparent;
+  pointer-events: all;
 }
 .steer-btn:active { background: rgba(255,150,0,0.3); }
 
@@ -237,9 +237,10 @@ body { background: #050200; font-family: 'Segoe UI', sans-serif; color: #fff; ov
   width: 90px; height: 72px;
   border: none; border-radius: 14px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 2px; cursor: pointer; touch-action: none; user-select: none;
+  gap: 2px; cursor: pointer; touch-action: manipulation; user-select: none;
   -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
   transition: transform 0.08s, box-shadow 0.08s;
+  pointer-events: all;
 }
 
 .gas-btn {
