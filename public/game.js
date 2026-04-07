@@ -197,6 +197,9 @@ function leaveWaiting() {
 //  START GAME (called when server fires gameStart)
 // ============================================================
 function startGame(data) {
+  if (myPlayer) return; // zaten başladı, tekrar çalışma
+  if (!data.playerId) return; // eksik data, yoksay
+
   document.getElementById('lobby').style.display = 'none';
   document.getElementById('gameCanvas').style.display = 'block';
   document.getElementById('hud').style.display = 'block';

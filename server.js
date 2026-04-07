@@ -167,11 +167,8 @@ function startGame(room) {
   room.gameState = 'playing';
   room.startTime = Date.now();
   Object.values(room.players).forEach(p => { p.alive = true; p.score = 0; });
-  io.to(room.id).emit('gameStart', {
-    players: room.players,
-    chainMode: room.chainMode
-  });
-  // Inject playerId per socket
+
+  // Her oyuncuya kendi bilgileriyle tek bir event gönder
   Object.values(room.players).forEach(p => {
     const s = io.sockets.sockets.get(p.id);
     if (s) s.emit('gameStart', {
